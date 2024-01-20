@@ -1,12 +1,22 @@
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
+import { DefaultLoadingManager } from "three";
+import { useEffect, useState } from "react";
+import { LoadingScreen } from "./LoadingScreen";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    DefaultLoadingManager.onLoad = () => setLoading(false);
+  }, []);
+
   return (
-    <Canvas shadows camera={{ position: [3, 30, 30], fov: 30 }}>
-      <color attach="background" args={["#0000FF"]} />
-      <Experience />
-    </Canvas>
+    <>
+      <Canvas>
+        <Experience />
+      </Canvas>
+      {loading && <LoadingScreen/>}
+    </>
   );
 }
 
