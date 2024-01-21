@@ -1,7 +1,13 @@
-import { Environment, Text, PerspectiveCamera } from "@react-three/drei";
+import {
+  Environment,
+  Text,
+  PerspectiveCamera,
+  Sphere,
+} from "@react-three/drei";
 import { Turbine } from "./Turbine";
 import { Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
 
 const INIT_POSITION = [-24.56, 0, 22.1];
 const INIT_ROTATION = [0.787, -0.947, 0.594];
@@ -20,15 +26,21 @@ addEventListener("mousemove", (e) => {
 });
 
 export const Experience = () => {
-  useFrame((state) => {
+  const helperNode = useRef();
+
+  useFrame((state, delta) => {
     const camera = state.camera;
-    targetX += (mouseX - targetX) * 0.001;
-    targetY += (mouseY - targetY) * 0.001;
+    const factor = 1000
+    // targetX = mouseX / factor;
+    // targetY = mouseY / factor;
+    targetX += (mouseX / factor - targetX) * 0.02;
+    targetY += (mouseY / factor - targetY) * 0.02;
     camera.getWorldPosition(target);
     target.addScaledVector(new Vector3(...X_AXIS), targetX);
     target.addScaledVector(new Vector3(...Y_AXIS), targetY);
-    target.addScaledVector(new Vector3(...Z_AXIS), 50);
+    target.addScaledVector(new Vector3(...Z_AXIS), 20);
     camera.lookAt(target);
+    camera.rotateZ(-.09)
   });
 
   return (
@@ -49,6 +61,10 @@ export const Experience = () => {
       >
         ECOVISTA
       </Text>
+      <mesh ref={helperNode}>
+        <sphereGeometry />
+        <meshStandardMaterial />
+      </mesh>
     </>
   );
 };
