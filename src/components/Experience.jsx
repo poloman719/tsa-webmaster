@@ -6,8 +6,9 @@ import {
 } from "@react-three/drei";
 import { Turbine } from "./Turbine";
 import { Vector3 } from "three";
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { extend, useFrame } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import Water from "./Water"
 
 const INIT_POSITION = [-24.56, 0, 22.1];
 const INIT_ROTATION = [0.787, -0.947, 0.594];
@@ -19,39 +20,37 @@ let targetY = 0;
 let targetX = 0;
 let mouseX = 0;
 let mouseY = 0;
-let target = new Vector3();
+const target = new Vector3();
 addEventListener("mousemove", (e) => {
   mouseX = e.clientX - innerWidth / 2;
   mouseY = e.clientY - innerHeight / 2;
 });
 
 export const Experience = () => {
-  const helperNode = useRef();
 
-  useFrame((state, delta) => {
-    const camera = state.camera;
-    const factor = 1000
-    // targetX = mouseX / factor;
-    // targetY = mouseY / factor;
-    targetX += (mouseX / factor - targetX) * 0.02;
-    targetY += (mouseY / factor - targetY) * 0.02;
-    camera.getWorldPosition(target);
-    target.addScaledVector(new Vector3(...X_AXIS), targetX);
-    target.addScaledVector(new Vector3(...Y_AXIS), targetY);
-    target.addScaledVector(new Vector3(...Z_AXIS), 20);
-    camera.lookAt(target);
-    camera.rotateZ(-.09)
-  });
+  // useFrame((state, delta) => {
+  //   const camera = state.camera;
+  //   const factor = 1000;
+  //   targetX += (mouseX / factor - targetX) * 0.02;
+  //   targetY += (mouseY / factor - targetY) * 0.02;
+  //   camera.getWorldPosition(target);
+  //   target.addScaledVector(new Vector3(...X_AXIS), targetX);
+  //   target.addScaledVector(new Vector3(...Y_AXIS), targetY);
+  //   target.addScaledVector(new Vector3(...Z_AXIS), 30);
+  //   camera.lookAt(target);
+  //   camera.rotateZ(-0.09);
+  // });
 
   return (
     <>
-      <PerspectiveCamera
-        rotation={INIT_ROTATION}
-        position={INIT_POSITION}
+      <OrbitControls />
+      {/* <PerspectiveCamera
+        // rotation={INIT_ROTATION}
+        // position={INIT_POSITION}
         fov={30}
         makeDefault
-      />
-      <Turbine />
+      /> */}
+      {/* <Turbine /> */}
       <Environment preset='dawn' background />
       <Text
         scale={[3, 3, 3]}
@@ -61,10 +60,7 @@ export const Experience = () => {
       >
         ECOVISTA
       </Text>
-      <mesh ref={helperNode}>
-        <sphereGeometry />
-        <meshStandardMaterial />
-      </mesh>
+      <Water />
     </>
   );
 };

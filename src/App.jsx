@@ -15,7 +15,7 @@ function App() {
       <Canvas>
         <Experience />
       </Canvas>
-      {loading && <LoadingScreen/>}
+      {loading && <LoadingScreen />}
     </>
   );
 }
