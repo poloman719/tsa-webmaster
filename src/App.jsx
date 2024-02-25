@@ -17,7 +17,7 @@ function App() {
         <Experience />
       </Canvas>
       {loading && <LoadingScreen />}
-      {/* <AnimatedCanvas /> */}
+      <AnimatedCanvas />
     </>
   );
 }
