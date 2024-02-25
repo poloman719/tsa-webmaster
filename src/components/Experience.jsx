@@ -3,12 +3,12 @@ import {
   Text,
   PerspectiveCamera,
   Sphere,
+  OrbitControls
 } from "@react-three/drei";
 import { Turbine } from "./Turbine";
-import { Vector3 } from "three";
-import { extend, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import Water from "./Water"
+import { Vector3, TextureLoader } from "three";
+import { extend, useFrame, useLoader } from "@react-three/fiber";
+import Water from "./Water";
 
 const INIT_POSITION = [-24.56, 0, 22.1];
 const INIT_ROTATION = [0.787, -0.947, 0.594];
@@ -27,7 +27,6 @@ addEventListener("mousemove", (e) => {
 });
 
 export const Experience = () => {
-
   // useFrame((state, delta) => {
   //   const camera = state.camera;
   //   const factor = 1000;
