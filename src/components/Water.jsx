@@ -1,9 +1,10 @@
 import { useLoader } from "@react-three/fiber";
-import { TextureLoader } from "three";
+import { CanvasTexture, TextureLoader } from "three";
 
 const Water = () => {
   const height = useLoader(TextureLoader, "water_height.jpg");
   const normal = useLoader(TextureLoader, "water_normal.png");
+  const texture = CanvasTexture()
 
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} scale={[2, 1, 0.2]}>
