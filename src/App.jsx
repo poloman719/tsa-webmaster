@@ -3,7 +3,6 @@ import { Experience } from "./components/Experience";
 import { DefaultLoadingManager } from "three";
 import { useEffect, useState } from "react";
 import { LoadingScreen } from "./LoadingScreen";
-import AnimatedCanvas from "./components/AnimatedCanvas";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -17,7 +16,6 @@ function App() {
         <Experience />
       </Canvas>
       {loading && <LoadingScreen />}
-      <AnimatedCanvas />
     </>
   );
 }
