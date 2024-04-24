@@ -1,6 +1,7 @@
 import { useLoader } from "@react-three/fiber";
 import AnimatedCanvasTexture from "./AnimatedCanvasTexture";
-import waterHeightImage from "./water_height.jpg"
+import waterHeightImage from "./water_height.jpg";
+import waterNormalImage from "./water_normal.png";
 import { CanvasTexture } from "three";
 import { useRef, useEffect } from "react";
 
@@ -35,7 +36,7 @@ const Water = () => {
     ctx.clearRect(0, 0, W, H)
     
     const img = new Image();
-    img.src = waterHeightImage;
+    img.src = waterNormalImage;
 
     ctx.drawImage(
       img,
@@ -43,10 +44,10 @@ const Water = () => {
       0,
       W - displacement,
       W,
-      displacement,
+      displacement - 25,
       0,
-      W - displacement,
-      W
+      W - displacement + 25,
+      W + 25
     )
     
     ctx.drawImage(
@@ -58,23 +59,23 @@ const Water = () => {
       0,
       0,
       displacement,
-      W
+      W + 25
     );
 
     if (planeMesh.current) {
       const texture = new CanvasTexture(canvasRef.current);
 
-      planeMesh.current.material.displacementMap = texture;
+      // planeMesh.current.material.displacementMap = texture;
+      planeMesh.current.material.normalMap = texture;
       // you need a second canvas for normalMap
-      // NEED TO FIX GAPS IN TEXTURE
     }
 
     requestAnimationFrame(animate);
   }
 
   return (
-    <mesh ref={planeMesh} rotation={[-Math.PI / 2, 0, 0]} scale={[2, 1, 0.2]}>
-      <planeGeometry args={[3, 5, 1024, 1024]} />
+    <mesh ref={planeMesh} rotation={[-Math.PI / 2, 0, 0]} scale={[1, 1, 0.2]}>
+      <planeGeometry args={[5, 5, 1024, 1024]} />
       <meshStandardMaterial>
         <canvasTexture attach="normalMap" needsUpdate />
         <canvasTexture attach="displacementMap" needsUpdate />

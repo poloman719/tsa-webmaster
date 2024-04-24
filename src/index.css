@@ -69,4 +69,8 @@ body {
 #canvas {
   position: fixed;
   right: 100%;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
 }

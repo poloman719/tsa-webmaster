@@ -46,7 +46,7 @@ const AnimatedCanvasTexture = (src, width, timeFactor) => {
       0,
       displacement,
       width,
-      1,
+      0,
       0,
       displacement,
       width
