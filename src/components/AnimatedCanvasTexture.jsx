@@ -21,7 +21,6 @@ const AnimatedCanvasTexture = (src, width, timeFactor) => {
   const canvas = createCanvas(width)
   const image = createImage(src, width)
   const ctx = canvas.getContext('2d');
-  requestAnimationFrame(animate);
 
   const animate = (time) => {
     if (!startTime || time - startTime > width / timeFactor)
@@ -41,7 +40,7 @@ const AnimatedCanvasTexture = (src, width, timeFactor) => {
       width
     )
     
-    ctx.current.drawImage(
+    ctx.drawImage(
       image,
       width - displacement,
       0,
@@ -55,8 +54,10 @@ const AnimatedCanvasTexture = (src, width, timeFactor) => {
 
     requestAnimationFrame(animate);
   }
+  
+  requestAnimationFrame(animate);
 
-  return CanvasTexture(canvas);
+  return new CanvasTexture(canvas);
 }
 
 export default AnimatedCanvasTexture;
