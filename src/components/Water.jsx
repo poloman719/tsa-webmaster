@@ -75,42 +75,13 @@ const Water = () => {
     return new CanvasTexture(canvasRef.current);
   }
 
-  const drawHeight = (x) => {
-    const img = new Image();
-    img.src = waterNormalImage;
-
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      W - displacement,
-      W,
-      displacement - 25,
-      0,
-      W - displacement + 25,
-      W + 25
-    )
-    
-    ctx.drawImage(
-      img,
-      W - displacement,
-      0,
-      displacement,
-      W,
-      0,
-      0,
-      displacement,
-      W + 25
-    );
-  }
-
   return (
-    <mesh ref={planeMesh} rotation={[-Math.PI / 2, 0, 0]} scale={[1, 1, 0.05]}>
+    <mesh ref={planeMesh} rotation={[-Math.PI / 2, 0, 0]} scale={[1, 1, 0.1]}>
       <planeGeometry args={[5, 5, 1024, 1024]} />
-      <meshStandardMaterial opacity={0.5} transparent>
+      <meshPhysicalMaterial opacity={.25} transparent transmission={1} roughness={.5} color={"darkslateblue"}>
         <canvasTexture attach="normalMap" needsUpdate />
         <canvasTexture attach="displacementMap" needsUpdate />
-      </meshStandardMaterial>
+      </meshPhysicalMaterial>
     </mesh>
   );
 };

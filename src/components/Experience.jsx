@@ -60,6 +60,26 @@ export const Experience = () => {
         ECOVISTA
       </Text>
       <Water />
+      <mesh position={[0, -.5, 0]} scale={[5, .5, 5]}>
+        <boxGeometry />
+        <meshStandardMaterial color={"peru"}/>
+      </mesh>
+      <mesh position={[2.75, 0, 0]} scale={[.5, .5, 5]}>
+        <boxGeometry />
+        <meshStandardMaterial color={"green"}/>
+      </mesh>
+      <mesh position={[-2.75, 0, 0]} scale={[.5, .5, 5]}>
+        <boxGeometry />
+        <meshStandardMaterial color={"green"}/>
+      </mesh>
+      <mesh position={[0, 0, 2.75]} scale={[5, .5, .5]}>
+        <boxGeometry />
+        <meshStandardMaterial color={"green"}/>
+      </mesh>
+      {/* <mesh position={[0, 0, -2.75]} scale={[5, .5, .5]}>
+        <boxGeometry />
+        <meshStandardMaterial color={"green"}/>
+      </mesh> */}
     </>
   );
 };
