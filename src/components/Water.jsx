@@ -7,7 +7,7 @@ import { useRef, useEffect } from "react";
 
 const W = 1024;
 const H = 1024;
-const SPEED = 5;
+const SPEED = 10;
 
 const Water = () => {
   const planeMesh = useRef();
@@ -33,8 +33,49 @@ const Water = () => {
     const displacement = (time - startTime.current) * SPEED / 1000;
     console.log(startTime.current)
 
-    ctx.clearRect(0, 0, W, H)
+    if (planeMesh.current) {
+      planeMesh.current.material.displacementMap = getTextureForImage(displacement, waterHeightImage);
+      planeMesh.current.material.normalMap = getTextureForImage(displacement, waterNormalImage);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  const getTextureForImage = (displacement, image) => {
+    const ctx = canvasRef.current.getContext("2d");
+    const img = new Image();
+    img.src = image;
+
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      W - displacement,
+      W,
+      displacement - 25,
+      0,
+      W - displacement + 25,
+      W + 25
+    )
     
+    ctx.drawImage(
+      img,
+      W - displacement,
+      0,
+      displacement,
+      W,
+      0,
+      0,
+      displacement,
+      W + 25
+    );
+
+    return new CanvasTexture(canvasRef.current);
+  }
+
+  const drawHeight = (x) => {
     const img = new Image();
     img.src = waterNormalImage;
 
@@ -61,22 +102,12 @@ const Water = () => {
       displacement,
       W + 25
     );
-
-    if (planeMesh.current) {
-      const texture = new CanvasTexture(canvasRef.current);
-
-      // planeMesh.current.material.displacementMap = texture;
-      planeMesh.current.material.normalMap = texture;
-      // you need a second canvas for normalMap
-    }
-
-    requestAnimationFrame(animate);
   }
 
   return (
-    <mesh ref={planeMesh} rotation={[-Math.PI / 2, 0, 0]} scale={[1, 1, 0.2]}>
+    <mesh ref={planeMesh} rotation={[-Math.PI / 2, 0, 0]} scale={[1, 1, 0.05]}>
       <planeGeometry args={[5, 5, 1024, 1024]} />
-      <meshStandardMaterial>
+      <meshStandardMaterial opacity={0.5} transparent>
         <canvasTexture attach="normalMap" needsUpdate />
         <canvasTexture attach="displacementMap" needsUpdate />
       </meshStandardMaterial>
